@@ -14,7 +14,7 @@ class Client(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 class Account(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='accounts')
+    client = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='accounts')
     account_number = models.CharField(max_length=20, unique=True)
     currency = models.CharField(max_length=3)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -23,7 +23,7 @@ class Account(models.Model):
         return f"{self.client.first_name} {self.client.last_name} - {self.account_number}"
 
 class Balance(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='balances')
+    account = models.ForeignKey(Account, on_delete=models.PROTECT, related_name='balances')
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     principal_amount = models.DecimalField(max_digits=15, decimal_places=2)
     interest_amount = models.DecimalField(max_digits=15, decimal_places=2)
@@ -41,7 +41,7 @@ class TransactionType(models.Model):
         return self.name
 
 class Transaction(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='transactions')
+    account = models.ForeignKey(Account, on_delete=models.PROTECT, related_name='transactions')
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     transaction_type = models.ForeignKey(TransactionType, on_delete=models.PROTECT)
     transaction_date = models.DateTimeField()
