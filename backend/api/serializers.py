@@ -4,7 +4,7 @@ from .models import Client, Account, Balance, Transaction, TransactionType
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
-        fields = ['id_client', 'first_name', 'last_name', 'email', 'phone', 'address', 'created_at']
+        fields = ['id_client', 'first_name', 'last_name', 'personal_id', 'email', 'phone', 'address', 'created_at']
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
