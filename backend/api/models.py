@@ -22,11 +22,10 @@ class Account(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.client.first_name} {self.client.last_name} - {self.account_number}"
+        return f"{self.account_number}"
 
 class Balance(models.Model):
     account = models.ForeignKey(Account, on_delete=models.PROTECT, related_name='balances')
-    amount = models.DecimalField(max_digits=15, decimal_places=2)
     principal_amount = models.DecimalField(max_digits=15, decimal_places=2)
     interest_amount = models.DecimalField(max_digits=15, decimal_places=2)
     fee_amount = models.DecimalField(max_digits=15, decimal_places=2)
@@ -34,7 +33,8 @@ class Balance(models.Model):
     snapshot_date = models.DateField()
     
     def __str__(self):
-        return f"{self.account.client.first_name} {self.account.client.last_name} : {self.amount}"
+        return f"{self.snapshot_date} : {self.principal_amount + self.fee_amount +
+                self.interest_amount}"
     
 class TransactionType(models.Model):
     name = models.CharField(max_length=50)
